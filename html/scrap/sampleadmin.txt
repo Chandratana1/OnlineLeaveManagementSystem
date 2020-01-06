@@ -1,0 +1,83 @@
+<html>
+<body>
+<!--<form method="post" action="admin1.php">-->
+<?php
+
+session_start();
+$con=mysqli_connect("localhost","root","");
+mysqli_select_db($con,"test");
+//$status=$_POST["status"];
+$status = isset($_POST['status']) ? $_POST['status'] : '';
+if (mysqli_connect_errno()) 
+{
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+function approval()
+{
+//$query=mysqli_query($con,"update leaveform set status='".$_SESSION['radio']."' WHERE idno = '".$row['idno']."' ");
+//$query=mysqli_query($con,"insert into leaveform(status) VALUES ('".$status."')");
+}
+
+/*function submit()
+{
+if($value==1)
+$query=mysqli_query($con,"insert into status_of_leave(status) values ('accepted')");
+else
+$query=mysqli_query($con,"insert into status_of_leave(status) values ('rejected')");
+}*/
+/*function accepted()
+{
+$query=mysqli_query($con,"insert into leaveform(status) values('accept')");
+	  }
+function denied()
+{
+$query=mysqli_query($con,"insert into leaveform(status) values('Denied')");
+}*/
+
+echo "EMPLOYEE LEAVES<br>";
+$result=mysqli_query($con,"select * from leaveform");
+echo "<table border=1>";
+echo "<tr>
+      <th>DATE OF <br> APPLICATION</th>
+	  <th>EMPLOYEE IDNO</th>
+	  <th>LEAVE FIRST<br> DATE</th>
+	  <th>LEAVE LAST<br>DATE</th>
+      <th>PURPOSE OF<br> LEAVE</th>
+	  <th colspan='2'>APPROVAL</th>
+	  
+	  </tr>";
+echo '<form method="post" action="admin1.php">';
+while($row=mysqli_fetch_array($result))
+{
+echo "<tr>
+      <td>" .$row['fdate']. "</td>
+	  <td>" .$row['idno']. "</td>
+	  <td>" .$row['sdate']. "</td>
+	  <td>" .$row['edate']. "</td>
+	  <td>" .$row['purpose']. "</td>";
+echo '<td><input type="radio" name="status[' .$row['idno'] .']" value="1">Accept<br>
+	       <input type="radio" name="status[' .$row['idno'] .']" value="0">Deny
+     </td>
+     <td><input type="submit" name="submit"></td>';
+ echo 	 "</tr>";
+}
+echo "</table>";
+echo '</form>';	
+//echo '<input type="submit" value="submit" >';
+
+?>
+<?php
+/*if(isset($_POST['submit']))
+	 {
+	  if($status==0)
+	  {
+	   $query=mysqli_query($con,"insert into leaveform(status) VALUES ('".$status."')");
+	   }
+	   else
+	   {
+	    $query=mysqli_query($con,"insert into leaveform(status) VALUES ('".$status."')");
+		}
+		}*/
+?>
+</body>
+</html>
